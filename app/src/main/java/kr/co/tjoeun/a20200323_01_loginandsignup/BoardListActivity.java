@@ -3,8 +3,10 @@ package kr.co.tjoeun.a20200323_01_loginandsignup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +38,14 @@ public class BoardListActivity extends BaseActivity {
     @Override
     public void setupEvents() {
 
+
+        binding.postBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, EditBlackActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -67,7 +77,12 @@ public class BoardListActivity extends BaseActivity {
                         }
 
 //                        모두 담긴 게시글들 => 어댑터가 새로고침.
-                        blackAdapter.notifyDataSetChanged();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                blackAdapter.notifyDataSetChanged();
+                            }
+                        });
 
 
 
